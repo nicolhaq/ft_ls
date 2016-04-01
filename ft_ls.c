@@ -6,25 +6,46 @@
 /*   By: nhaquet <nhaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 23:49:32 by nhaquet           #+#    #+#             */
-/*   Updated: 2016/02/25 00:30:58 by nhaquet          ###   ########.fr       */
+/*   Updated: 2016/04/01 23:01:32 by nhaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <dirent.h>
 #include <unistd.h>
-#include<errno.h>
+#include <stdlib.h>
+#include <errno.h>
+#include "libft/libft.h"
+#include "ft_ls.h"
 
-int	strsize (char * str)
+void initlist(char *str, t_list *list)
 {
-	int i;
-
-	i = 0;
-	while(str[i] > 0)
+	list = malloc(sizeof(t_list));
+	if (list != NULL)
 	{
-		i++;
+		list->str = str;
+		list->next = NULL;
+		list->next = NULL;
 	}
-	return (i);
+}
+
+void newnode(char *str, t_list *list)
+{
+	t_list	*node;
+
+	if(list == NULL)
+		initlist(str, list);
+	else
+	{
+		node = malloc(sizeof(t_list));
+		if(node != NULL)
+		{
+			node->str = str;
+			node->next = list;
+			node->prev = NULL;
+			list->prev = node;
+		}
+	}
 }
 
 int	main(int argc,char **argv)
@@ -32,21 +53,26 @@ int	main(int argc,char **argv)
 	DIR		*dir;
 	struct	dirent	*ret;
 	char	*mem1;
+	t_list	*list;
+	int		stop;
 
 	ret = NULL;
 	mem1 = ".";
+	list = NULL;
+	stop = 0;
 	if (argc > 1)
 		mem1 = argv[1];
-
 	dir = opendir(mem1);
-	while (1)
+	while (stop == 0)
 	{
 		ret = readdir(dir);
-		write(1,ret->d_name,strsize(ret->d_name));
-		write(1, "\n", 1);
-		if (ret == NULL && errno == 0) {
-			return(0);
-		}
+		newnode(ret->d_name, list);
+		if (ret == NULL && errno == 0)
+			stop = 1;
 	}
-	return 0;
+	while (list->next != NULL) {
+		write(1, list->str, ft_strlen(list->str));
+		list = list->next;
+	}
+	return (0);
 }
