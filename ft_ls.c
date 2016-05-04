@@ -6,7 +6,7 @@
 /*   By: nhaquet <nhaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 23:49:32 by nhaquet           #+#    #+#             */
-/*   Updated: 2016/04/01 23:01:32 by nhaquet          ###   ########.fr       */
+/*   Updated: 2016/04/14 20:24:41 by nhaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	main(int argc,char **argv)
 			stop = 1;
 	}
 	while (list->next != NULL) {
+		ft_putstr("lol\n");
 		write(1, list->str, ft_strlen(list->str));
 		list = list->next;
 	}

@@ -6,7 +6,7 @@
 #    By: nhaquet <nhaquet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/26 01:16:20 by nhaquet           #+#    #+#              #
-#    Updated: 2016/04/01 23:09:07 by nhaquet          ###   ########.fr        #
+#    Updated: 2016/04/14 20:20:35 by nhaquet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRC_PATH = .
 SRC_NAME = ft_ls.c
 OBJ_PATH = obj
 MAKE = make
-CC = gcc
+CC = clang
 CFLAGS = -Wall -Werror -Wextra
 CPPFLAGS = -I./
 LDLIBS = -lft
@@ -28,10 +28,10 @@ OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ_NAME)
 	$(CC) $(LDFLAGS) $(LDLIBS) $^ -o $@
 
-$(OBJ)%.o: $(SRC)%.c
+$(OBJ).o: $(SRC).c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
